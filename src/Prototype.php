@@ -54,14 +54,20 @@ class Prototype
     }
 
     /**
-     * @param       $name
-     * @param array $params
+     * @param            $name
+     * @param array|null $params
      *
      * @return $this
+     * @throws \Exception
      */
     public function tmpl($name, array $params = null)
     {
         if ($params === null) {
+
+            if (!isset($this->tmpl[$name])) {
+                throw new \Exception('Tmpl is undefined, please setup it first!');
+            }
+
             $this->updateLast($this->tmpl[$name]);
 
             return $this;
@@ -118,6 +124,42 @@ class Prototype
     public function tag($tag)
     {
         $this->tag = $tag;
+
+        return $this;
+    }
+
+    /**
+     * @param array $bind
+     *
+     * @return $this
+     */
+    public function bind(array $bind = [])
+    {
+        $this->updateLast(['bind' => $bind]);
+
+        return $this;
+    }
+
+    /**
+     * @param array $request
+     *
+     * @return $this
+     */
+    public function req(array $request = [])
+    {
+        $this->updateLast(['request' => $request]);
+
+        return $this;
+    }
+
+    /**
+     * @param array $response
+     *
+     * @return $this
+     */
+    public function res(array $response = [])
+    {
+        $this->updateLast(['response' => $response]);
 
         return $this;
     }
@@ -198,13 +240,11 @@ class Prototype
 
     /**
      * @param        $target
-     * @param        $request
-     * @param        $response
      * @param string $message
      *
-     * @return $this
+     * @return Prototype
      */
-    public function target($target, $request, $response, $message = '')
+    public function target($target, $message = '')
     {
         $target = trim($target);
         $target = preg_replace('/\s+/', ' ', $target);
@@ -215,8 +255,6 @@ class Prototype
             'type'     => __FUNCTION__,
             'method'   => $method,
             'url'      => $url,
-            'request'  => $request,
-            'response' => $response,
             'message'  => $message,
         ];
 
