@@ -1,0 +1,10 @@
+{
+  "name": "simplario/prototype",
+  "description": "Prototype - fast project prototyping",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Simplario\\Prototype\\": "src"
+    }
+  }
+}
