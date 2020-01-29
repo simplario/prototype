@@ -62,13 +62,38 @@ class Prototype
     public function tmpl($name, array $params = null)
     {
         if ($params === null) {
-            $index = count($this->schema) - 1;
-            $this->schema[$index] = Helper::array_extends($this->schema[$index], $this->tmpl[$name]);
+            $this->updateLast($this->tmpl[$name]);
 
             return $this;
         }
 
         $this->tmpl[$name] = $params;
+
+        return $this;
+    }
+
+    /**
+     * @param $name
+     * @param $arguments
+     *
+     * @return $this
+     */
+    public function __call($name, $arguments)
+    {
+        $this->updateLast([$name => $arguments]);
+
+        return $this;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return $this
+     */
+    public function updateLast(array $data = [])
+    {
+        $index = count($this->schema) - 1;
+        $this->schema[$index] = Helper::array_extends($this->schema[$index], $data);
 
         return $this;
     }
