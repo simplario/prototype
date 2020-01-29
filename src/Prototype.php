@@ -123,7 +123,6 @@ class Prototype
      */
     public function column(array $array, $key, $unique = false)
     {
-
         $pack = array_column($array, $key);
 
         if ($unique) {
@@ -156,6 +155,23 @@ class Prototype
     }
 
     /**
+     * @param array $array
+     *
+     * @return $this
+     */
+    public function add(array $array = [])
+    {
+        $array['group'] = $this->group;
+        $array['config'] = $this->config;
+        $array['tag'] = $this->tag;
+
+        $this->schema[] = $array;
+
+        return $this;
+    }
+
+
+    /**
      * @param        $target
      * @param        $request
      * @param        $response
@@ -178,15 +194,10 @@ class Prototype
             'request'  => $request,
             'response' => $response,
             'message'  => $message,
-            // add extra -----------------
-            'config'   => $this->config,
-            'group'    => $this->group,
-            'tag'      => $this->tag,
         ];
 
-        $this->schema[] = $add;
 
-        return $this;
+        return $this->add($add);
     }
 
 
@@ -206,15 +217,11 @@ class Prototype
             'name'    => $name,
             'field'   => $field,
             'message' => $message,
-            // add extra -----------------
-            'config'  => $this->config,
-            'group'   => $this->group,
-            'tag'     => $this->tag,
         ];
 
         $this->schema[] = $add;
 
-        return $this;
+        return $this->add($add);
     }
 
 }
