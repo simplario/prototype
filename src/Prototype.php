@@ -181,7 +181,6 @@ class Prototype
      */
     public function target($target, $request, $response, $message = '')
     {
-
         $target = trim($target);
         $target = preg_replace('/\s+/', ' ', $target);
 
@@ -195,7 +194,6 @@ class Prototype
             'response' => $response,
             'message'  => $message,
         ];
-
 
         return $this->add($add);
     }
@@ -218,8 +216,6 @@ class Prototype
             'field'   => $field,
             'message' => $message,
         ];
-
-        $this->schema[] = $add;
 
         return $this->add($add);
     }
